@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Task</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: left;
+            margin-bottom: 40px;
+            padding: 20px;
+        }
+        h1 {
+            margin: 0;
+            color: #333;
+        }
+        .form-section {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            max-width: 500px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        .form-group input {
+            max-width: 300px;
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ecf0f1;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #333;
+        }
+        .form-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-primary {
+            background: #333;
+            color: white;
+        }
+        .btn-secondary {
+            background: #ecf0f1;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Add new</h1>
+    </header>
+
+    <div class="form-section">
+        <form action="/add-task" method="post">
+            <div class="form-group">
+                <label for="name">Task Name:</label>
+                <input type="text" id="name" name="name" required
+                       placeholder="Enter task name">
+            </div>
+
+            <div class="form-group">
+                <label for="deadlineDate">Deadline:</label>
+                <input type="date" id="deadlineDate" name="deadlineDate" required>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Add Task</button>
+                <a href="/lab3-tasks" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>l>

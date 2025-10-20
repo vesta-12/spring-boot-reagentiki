@@ -1,4 +1,5 @@
-package com.example.springbootdemo;
+package com.example.springbootdemo.controller;
+import com.example.springbootdemo.model.Reagent;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,18 +18,10 @@ public class ChemicalController {
         );
     }
 
-    @GetMapping(value = "/")
-    public String indexPage(Model model) {
+    @GetMapping("/lab2")
+    public String lab2Page(Model model) {
         model.addAttribute("itemsList", getItemsList());
-        return "items";}
-
-    @GetMapping("/items")
-    public String itemsPage(Model model) {
-        model.addAttribute("itemsList", getItemsList());
-        return "items";}
-
-    @GetMapping("/about")
-    public String aboutPage() {
-        return "about";
+        return "items";
     }
+
 }

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Assign Operators</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="form-container">
+        <h2>Assign Operators to Request #<span th:text="${app.id}"></span></h2>
+
+        <div class="application-info" style="background: #f5f5f5; padding: 15px; margin-bottom: 20px; border-radius: 5px;">
+            <p><strong>User:</strong> <span th:text="${app.userName}"></span></p>
+            <p><strong>Course:</strong> <span th:text="${app.course?.name}"></span></p>
+            <p><strong>Phone:</strong> <span th:text="${app.phone}"></span></p>
+        </div>
+
+        <form th:action="@{/applications/{id}/assign-operators(id=${app.id})}" method="post">
+            <div class="form-group">
+                <label for="operators">Select Operators:</label>
+                <select id="operators" name="operatorIds" class="form-control" multiple size="8" required>
+                    <option th:each="operator : ${operators}"
+                            th:value="${operator.id}"
+                            th:text="${operator.name + ' ' + operator.surname + ' - ' + operator.department}">
+                    </option>
+                </select>
+                <small class="form-text">You can select multiple operators</small>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">Assign</button>
+                <a th:href="@{/applications/{id}(id=${app.id})}" class="btn-cancel">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .form-control[multiple] {
+        min-height: 150px;
+    }
+
+    .operator-item {
+        padding: 8px;
+        margin: 5px 0;
+        background: #f8f9fa;
+        border-radius: 4px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .btn-small {
+        padding: 4px 8px;
+        font-size: 12px;
+    }
+
+    .operators-section {
+        margin-top: 20px;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 5px;
+    }
+</style>
+</body>
+</html>

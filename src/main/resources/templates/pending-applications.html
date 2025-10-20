@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Pending request</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1 class="page-title text-center">Pending request</h1>
+
+    <div th:if="${applications.size() == 0}" class="alert text-center">
+        All request is pending.
+    </div>
+
+    <div th:if="${applications.size() > 0}" class="cards-grid">
+        <div th:each="app : ${applications}" class="application-card">
+            <h3 th:text="${app.course?.name} ?: 'No course'">Course</h3>
+            <p class="app-info"><span class="app-label">Username:</span> <span th:text="${app.userName}"></span></p>
+            <p class="app-info"><span class="app-label">Phone:</span> <span th:text="${app.phone}"></span></p>
+            <p class="app-info" th:if="${app.course != null}">
+                <span class="app-label">Price:</span>
+                <span th:text="'$' + ${app.course.price}"></span>
+            </p>
+            <span class="status-badge status-unprocessed">Pending</span>
+
+            <div>
+                <a th:href="@{/applications/{id}(id=${app.id})}" class="btn-details">Details</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

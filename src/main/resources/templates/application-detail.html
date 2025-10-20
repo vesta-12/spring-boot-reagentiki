@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Application details</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="application-card mx-auto" style="max-width: 600px;">
+        <h3>Request №<span th:text="${app.id}"></span></h3>
+
+        <p class="app-info">
+            <span class="app-label">Username:</span>
+            <span th:text="${app.userName}"></span>
+        </p>
+
+        <p class="app-info">
+            <span class="app-label">Course:</span>
+            <span th:text="${app.course?.name} ?: 'No course selected'"></span>
+        </p>
+
+        <p class="app-info" th:if="${app.course != null}">
+            <span class="app-label">Course price:</span>
+            <span th:text="'$' + ${app.course.price}"></span>
+        </p>
+
+        <p class="app-info" th:if="${app.course != null}">
+            <span class="app-label">Course description:</span>
+            <span th:text="${app.course.description}"></span>
+        </p>
+
+        <p class="app-info">
+            <span class="app-label">Commentary:</span>
+            <span th:text="${app.commentary}"></span>
+        </p>
+
+        <p class="app-info">
+            <span class="app-label">Phone:</span>
+            <span th:text="${app.phone}"></span>
+        </p>
+
+        <p class="app-info">
+            <span class="app-label">Status:</span>
+            <span th:classappend="${app.handled} ? 'status-badge status-processed' : 'status-badge status-unprocessed'"
+                  th:text="${app.handled} ? 'Processed' : 'Pending'"></span>
+        </p>
+
+        <div th:if="${app.handled && app.operators.size() > 0}" class="operators-section">
+            <h4>Assigned operators:</h4>
+            <div th:each="operator : ${app.operators}" class="operator-item">
+                <span th:text="${operator.name + ' ' + operator.surname + ' (' + operator.department + ')'}"></span>
+                <form th:action="@{/applications/{requestId}/remove-operator/{operatorId}(requestId=${app.id}, operatorId=${operator.id})}"
+                      method="post"
+                      style="display:inline; margin-left:10px;">
+                    <button type="submit" class="btn-cancel btn-small"
+                            onclick="return confirm('Remove operator from this request?')">
+                        Remove
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div th:if="${app.handled && app.operators.size() == 0}" class="operators-section">
+            <p>No operators assigned</p>
+        </div>
+
+        <div class="form-actions" style="margin-top:20px;">
+            <a th:if="${!app.handled}"
+               th:href="@{/applications/{id}/assign-operators(id=${app.id})}"
+               class="btn-submit">
+                Process request
+            </a>
+
+            <form th:action="@{/applications/{id}/delete(id=${app.id})}"
+                  method="post"
+                  style="display:inline; margin-left:10px;">
+                <button type="submit" class="btn-cancel" onclick="return confirm('Delete request?')">Delete</button>
+            </form>
+
+            <a href="/applications" class="btn-cancel" style="margin-left:10px;">Back</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
