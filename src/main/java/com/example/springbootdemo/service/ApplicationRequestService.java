@@ -57,6 +57,20 @@ public class ApplicationRequestService {
     }
 
     @Transactional
+    public ApplicationRequest assignSingleOperator(Long requestId, Long operatorId) {
+        ApplicationRequest request = getApplicationById(requestId);
+        Operators operator = operatorsRepository.findById(operatorId).orElse(null);
+
+        if (request != null && operator != null && !request.isHandled()) {
+            request.getOperators().clear();
+            request.getOperators().add(operator);
+            request.setHandled(true);
+            return applicationRequestRepository.save(request);
+        }
+        return null;
+    }
+
+    @Transactional
     public void removeOperator(Long requestId, Long operatorId) {
         ApplicationRequest request = getApplicationById(requestId);
         if (request != null) {
