@@ -25,7 +25,7 @@ public class OperatorsRestController {
     }
 
     @PutMapping("/{operatorId}/assign/{requestId}")
-    public long assignOperatorToRequest(
+    public ApplicationRequest assignOperatorToRequest(
             @PathVariable Long operatorId,
             @PathVariable Long requestId) {
 
