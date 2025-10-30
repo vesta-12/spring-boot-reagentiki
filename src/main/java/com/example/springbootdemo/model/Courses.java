@@ -1,4 +1,5 @@
 package com.example.springbootdemo.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,5 +26,6 @@ public class Courses {
     private int price;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<ApplicationRequest> applications = new ArrayList<>();
 }

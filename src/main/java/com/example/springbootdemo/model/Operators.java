@@ -1,4 +1,5 @@
 package com.example.springbootdemo.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,5 +26,6 @@ public class Operators {
     private String department;
 
     @ManyToMany(mappedBy = "operators")
+    @JsonIgnore
     private List<ApplicationRequest> requests = new ArrayList<>();
 }
