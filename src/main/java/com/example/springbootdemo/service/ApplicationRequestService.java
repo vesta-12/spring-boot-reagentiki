@@ -78,4 +78,20 @@ public class ApplicationRequestService {
             applicationRequestRepository.deleteById(id);
         }
     }
+    public ApplicationRequest saveApplication(ApplicationRequest application) {
+        application.setHandled(false);
+        return applicationRequestRepository.save(application);
+    }
+
+    public ApplicationRequest updateApplication(Long id, ApplicationRequest requestDetails) {
+        ApplicationRequest request = getApplicationById(id);
+        if (request != null) {
+            request.setUserName(requestDetails.getUserName());
+            request.setCommentary(requestDetails.getCommentary());
+            request.setPhone(requestDetails.getPhone());
+            request.setHandled(requestDetails.isHandled());
+            return applicationRequestRepository.save(request);
+        }
+        return null;
+    }
 }
