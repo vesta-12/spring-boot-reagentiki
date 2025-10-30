@@ -28,7 +28,8 @@ public class OperatorsRestController {
     public long assignOperatorToRequest(
             @PathVariable Long operatorId,
             @PathVariable Long requestId) {
-        return operatorId + requestId;
+
+        return applicationRequestService.assignSingleOperator(requestId, operatorId);
     }
 
     @DeleteMapping("/{id}")
