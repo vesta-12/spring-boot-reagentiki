@@ -13,6 +13,7 @@ import java.util.List;
 public class OperatorsRestController {
 
     private final OperatorsRepository operatorsRepository;
+    private final ApplicationRequestService applicationRequestService;
 
     @GetMapping
     public List<Operators> getAllOperators() {
