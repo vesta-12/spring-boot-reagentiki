@@ -1,5 +1,6 @@
 package com.example.springbootdemo.controller;
 
+import com.example.springbootdemo.model.ApplicationRequest;
 import com.example.springbootdemo.model.Operators;
 import com.example.springbootdemo.repository.OperatorsRepository;
 import lombok.RequiredArgsConstructor;
