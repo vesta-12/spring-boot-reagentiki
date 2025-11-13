@@ -57,20 +57,6 @@ public class ApplicationRequestService {
     }
 
     @Transactional
-    public ApplicationRequest assignSingleOperator(Long requestId, Long operatorId) {
-        ApplicationRequest request = getApplicationById(requestId);
-        Operators operator = operatorsRepository.findById(operatorId).orElse(null);
-
-        if (request != null && operator != null && !request.isHandled()) {
-            request.getOperators().clear();
-            request.getOperators().add(operator);
-            request.setHandled(true);
-            return applicationRequestRepository.save(request);
-        }
-        return null;
-    }
-
-    @Transactional
     public void removeOperator(Long requestId, Long operatorId) {
         ApplicationRequest request = getApplicationById(requestId);
         if (request != null) {
@@ -84,28 +70,14 @@ public class ApplicationRequestService {
     public List<Courses> getAllCourses() {
         return coursesRepository.findAll();
     }
+
     public List<Operators> getAllOperators() {
         return operatorsRepository.findAll();
     }
+
     public void deleteApplication(Long id) {
         if (applicationRequestRepository.existsById(id)) {
             applicationRequestRepository.deleteById(id);
         }
-    }
-    public ApplicationRequest saveApplication(ApplicationRequest application) {
-        application.setHandled(false);
-        return applicationRequestRepository.save(application);
-    }
-
-    public ApplicationRequest updateApplication(Long id, ApplicationRequest requestDetails) {
-        ApplicationRequest request = getApplicationById(id);
-        if (request != null) {
-            request.setUserName(requestDetails.getUserName());
-            request.setCommentary(requestDetails.getCommentary());
-            request.setPhone(requestDetails.getPhone());
-            request.setHandled(requestDetails.isHandled());
-            return applicationRequestRepository.save(request);
-        }
-        return null;
     }
 }
