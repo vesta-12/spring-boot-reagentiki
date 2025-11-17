@@ -35,9 +35,7 @@ public class ExperimentController {
     @PostMapping
     public ResponseEntity<ExperimentDTO> createExperiment(@RequestBody ExperimentDTO dto) {
         ExperimentDTO created = experimentService.createExperiment(dto);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(created);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     @PutMapping("/{id}")
@@ -55,5 +53,69 @@ public class ExperimentController {
     public ResponseEntity<Void> deleteExperiment(@PathVariable Long id) {
         experimentService.deleteExperiment(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{experimentId}/laboratory/{laboratoryId}")
+    public ResponseEntity<ExperimentDTO> assignLaboratory(
+            @PathVariable Long experimentId,
+            @PathVariable Long laboratoryId) {
+        ExperimentDTO result = experimentService.assignLaboratoryToExperiment(experimentId, laboratoryId);
+        return result != null
+                ? ResponseEntity.ok(result)
+                : ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{experimentId}/laboratory")
+    public ResponseEntity<ExperimentDTO> removeLaboratory(@PathVariable Long experimentId) {
+        ExperimentDTO result = experimentService.removeLaboratoryFromExperiment(experimentId);
+        return result != null
+                ? ResponseEntity.ok(result)
+                : ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/{experimentId}/researchers/{researcherId}")
+    public ResponseEntity<ExperimentDTO> addResearcher(
+            @PathVariable Long experimentId,
+            @PathVariable Long researcherId) {
+        ExperimentDTO result = experimentService.addResearcherToExperiment(experimentId, researcherId);
+        return result != null
+                ? ResponseEntity.ok(result)
+                : ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{experimentId}/researchers/{researcherId}")
+    public ResponseEntity<ExperimentDTO> removeResearcher(
+            @PathVariable Long experimentId,
+            @PathVariable Long researcherId) {
+        ExperimentDTO result = experimentService.removeResearcherFromExperiment(experimentId, researcherId);
+        return result != null
+                ? ResponseEntity.ok(result)
+                : ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/{experimentId}/researchers")
+    public ResponseEntity<ExperimentDTO> updateResearchers(
+            @PathVariable Long experimentId,
+            @RequestBody List<Long> researcherIds) {
+        ExperimentDTO result = experimentService.updateExperimentResearchers(experimentId, researcherIds);
+        return result != null
+                ? ResponseEntity.ok(result)
+                : ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/laboratory/{laboratoryId}")
+    public ResponseEntity<List<ExperimentDTO>> getExperimentsByLaboratory(@PathVariable Long laboratoryId) {
+        List<ExperimentDTO> experiments = experimentService.getExperimentsByLaboratory(laboratoryId);
+        return experiments.isEmpty()
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.ok(experiments);
+    }
+
+    @GetMapping("/researcher/{researcherId}")
+    public ResponseEntity<List<ExperimentDTO>> getExperimentsByResearcher(@PathVariable Long researcherId) {
+        List<ExperimentDTO> experiments = experimentService.getExperimentsByResearcher(researcherId);
+        return experiments.isEmpty()
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.ok(experiments);
     }
 }
