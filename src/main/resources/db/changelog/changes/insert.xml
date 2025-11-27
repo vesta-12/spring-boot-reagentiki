@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+<changeSet id="insert-countries" author="creator">
+        <insert tableName="countries">
+            <column name="name" value="Sweden"/>
+            <column name="code" value="SW"/>
+        </insert>
+        <insert tableName="countries">
+            <column name="name" value="Vietnam"/>
+            <column name="code" value="VNM"/>
+        </insert>
+        <insert tableName="countries">
+            <column name="name" value="China"/>
+            <column name="code" value="CN"/>
+        </insert>
+        <insert tableName="countries">
+            <column name="name" value="Germany"/>
+            <column name="code" value="DE"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert-items" author="creator">
+        <insert tableName="items">
+            <column name="name" value="Hydrochloric Acid"/>
+            <column name="price" valueNumeric="23600"/>
+            <column name="quantity" valueNumeric="10"/>
+            <column name="manufacturer_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="items">
+            <column name="name" value="Sodium Hydroxide"/>
+            <column name="price" valueNumeric="19900"/>
+            <column name="quantity" valueNumeric="15"/>
+            <column name="manufacturer_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="items">
+            <column name="name" value="Sulfuric Acid"/>
+            <column name="price" valueNumeric="45600"/>
+            <column name="quantity" valueNumeric="7"/>
+            <column name="manufacturer_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="items">
+            <column name="name" value="Silver Nitrate"/>
+            <column name="price" valueNumeric="67800"/>
+            <column name="quantity" valueNumeric="25"/>
+            <column name="manufacturer_id" valueNumeric="1"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

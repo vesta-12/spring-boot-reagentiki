@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="${pageTitle}">Item form</title>
+</head>
+<body>
+<div class="main-container" layout:fragment="content">
+    <div class="container">
+        <div class="form-container">
+            <h2 th:text="${formTitle}">Item</h2>
+
+            <form th:action="${formAction}" th:object="${item}" method="post">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input id="name" type="text" class="form-control" th:field="*{name}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="price">Price (KZT)</label>
+                    <input id="price" type="number" class="form-control" th:field="*{price}" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <input id="quantity" type="number" class="form-control" th:field="*{quantity}" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="manufacturer">Manufacturer</label>
+                    <select id="manufacturer" class="form-control" th:field="*{manufacturerId}" required>
+                        <option value="" disabled th:selected="${item.manufacturerId == null}">Select country</option>
+                        <option th:each="c : ${countries}"
+                                th:value="${c.id}"
+                                th:text="${c.name}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-submit">Save</button>
+                    <a href="/items" class="btn-cancel">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

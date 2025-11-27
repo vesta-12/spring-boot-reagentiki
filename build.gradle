@@ -37,6 +37,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.3.0'
     runtimeOnly 'org.postgresql:postgresql:42.7.7'
+    implementation 'org.liquibase:liquibase-core'
+
 }
 
 tasks.named('test') {
