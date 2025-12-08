@@ -7,6 +7,7 @@ import com.example.springbootdemo.model.Item;
 import com.example.springbootdemo.repository.CountryRepository;
 import com.example.springbootdemo.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,11 +20,13 @@ public class ItemService {
     private final CountryRepository countryRepository;
     private final ItemMapper itemMapper;
 
+    @Transactional(readOnly = true)
     public List<ItemDto> getAllItems() {
         List<Item> items = itemRepository.findAll();
         return itemMapper.toDtoList(items);
     }
 
+    @Transactional(readOnly = true)
     public ItemDto getItem(Long id) {
         Item item = itemRepository.findById(id).orElse(null);
         return item != null ? itemMapper.toDto(item) : null;

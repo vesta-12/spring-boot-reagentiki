@@ -23,7 +23,7 @@ public class Item {
     @Column(name = "quantity", nullable = false)
     private int quantity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "manufacturer_id", nullable = false)
     private Country manufacturer;
 }
