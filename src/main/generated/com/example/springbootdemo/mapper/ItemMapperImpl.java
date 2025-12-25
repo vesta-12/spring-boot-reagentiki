@@ -1,8 +1,5 @@
 package com.example.springbootdemo.mapper;
 
-import com.example.springbootdemo.DTO.ItemDto;
-import com.example.springbootdemo.model.Country;
-import com.example.springbootdemo.model.Item;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;

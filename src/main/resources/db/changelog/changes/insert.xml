@@ -5,49 +5,157 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                             http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-<changeSet id="insert-countries" author="creator">
-        <insert tableName="countries">
-            <column name="name" value="Sweden"/>
-            <column name="code" value="SW"/>
+    <changeSet id="insert-laboratories" author="creator">
+        <insert tableName="laboratories">
+            <column name="name" value="Central Chemistry Lab"/>
+            <column name="location" value="Almaty"/>
+            <column name="department" value="Chemistry"/>
+            <column name="equipment_description" value="Basic wet chemistry equipment, fume hoods, analytical balances."/>
         </insert>
-        <insert tableName="countries">
-            <column name="name" value="Vietnam"/>
-            <column name="code" value="VNM"/>
+
+        <insert tableName="laboratories">
+            <column name="name" value="BioTech Research Lab"/>
+            <column name="location" value="Astana"/>
+            <column name="department" value="Biotechnology"/>
+            <column name="equipment_description" value="PCR, centrifuges, incubators, microscopes."/>
         </insert>
-        <insert tableName="countries">
-            <column name="name" value="China"/>
-            <column name="code" value="CN"/>
-        </insert>
-        <insert tableName="countries">
-            <column name="name" value="Germany"/>
-            <column name="code" value="DE"/>
+
+        <insert tableName="laboratories">
+            <column name="name" value="Materials Testing Lab"/>
+            <column name="location" value="Karaganda"/>
+            <column name="department" value="Materials Science"/>
+            <column name="equipment_description" value="Hardness testers, tensile machine, optical microscope."/>
         </insert>
     </changeSet>
 
-    <changeSet id="insert-items" author="creator">
-        <insert tableName="items">
-            <column name="name" value="Hydrochloric Acid"/>
-            <column name="price" valueNumeric="23600"/>
-            <column name="quantity" valueNumeric="10"/>
-            <column name="manufacturer_id" valueNumeric="2"/>
+    <changeSet id="insert-researchers" author="creator">
+        <insert tableName="researchers">
+            <column name="first_name" value="Aruzhan"/>
+            <column name="last_name" value="Nurzhanova"/>
+            <column name="email" value="aruzhan.nurzhanova@university.kz"/>
+            <column name="specialization" value="Analytical Chemistry"/>
+            <column name="phone_number" value="+7-701-111-22-33"/>
         </insert>
-        <insert tableName="items">
-            <column name="name" value="Sodium Hydroxide"/>
-            <column name="price" valueNumeric="19900"/>
-            <column name="quantity" valueNumeric="15"/>
-            <column name="manufacturer_id" valueNumeric="3"/>
+
+        <insert tableName="researchers">
+            <column name="first_name" value="Dias"/>
+            <column name="last_name" value="Sadykov"/>
+            <column name="email" value="dias.sadykov@university.kz"/>
+            <column name="specialization" value="Biochemistry"/>
+            <column name="phone_number" value="+7-702-222-33-44"/>
         </insert>
-        <insert tableName="items">
-            <column name="name" value="Sulfuric Acid"/>
-            <column name="price" valueNumeric="45600"/>
-            <column name="quantity" valueNumeric="7"/>
-            <column name="manufacturer_id" valueNumeric="4"/>
+
+        <insert tableName="researchers">
+            <column name="first_name" value="Madina"/>
+            <column name="last_name" value="Kairatova"/>
+            <column name="email" value="madina.kairatova@university.kz"/>
+            <column name="specialization" value="Materials Engineering"/>
+            <column name="phone_number" value="+7-705-333-44-55"/>
         </insert>
-        <insert tableName="items">
-            <column name="name" value="Silver Nitrate"/>
-            <column name="price" valueNumeric="67800"/>
-            <column name="quantity" valueNumeric="25"/>
-            <column name="manufacturer_id" valueNumeric="1"/>
+
+        <insert tableName="researchers">
+            <column name="first_name" value="Timur"/>
+            <column name="last_name" value="Akhmetov"/>
+            <column name="email" value="timur.akhmetov@university.kz"/>
+            <column name="specialization" value="Organic Synthesis"/>
+            <column name="phone_number" value="+7-707-444-55-66"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert-experiments" author="creator">
+        <insert tableName="experiments">
+            <column name="experiment_name" value="Titration of HCl with NaOH"/>
+            <column name="researcher_name" value="Aruzhan Nurzhanova"/>
+            <column name="date" valueDate="2025-10-10"/>
+            <column name="reagents_used" value="HCl 0.1M; NaOH 0.1M; Phenolphthalein"/>
+            <column name="method" value="Acid-base titration with indicator endpoint detection."/>
+            <column name="result_summary" value="Normality confirmed; endpoint at 24.6 mL NaOH."/>
+            <column name="laboratory_id" valueNumeric="1"/>
+        </insert>
+
+        <insert tableName="experiments">
+            <column name="experiment_name" value="PCR Amplification of Target Gene"/>
+            <column name="researcher_name" value="Dias Sadykov"/>
+            <column name="date" valueDate="2025-11-03"/>
+            <column name="reagents_used" value="DNA template; primers; dNTP; polymerase"/>
+            <column name="method" value="Thermal cycling PCR; gel electrophoresis validation."/>
+            <column name="result_summary" value="Successful amplification; single band at expected size."/>
+            <column name="laboratory_id" valueNumeric="2"/>
+        </insert>
+
+        <insert tableName="experiments">
+            <column name="experiment_name" value="Hardness Test of Alloy Samples"/>
+            <column name="researcher_name" value="Madina Kairatova"/>
+            <column name="date" valueDate="2025-11-20"/>
+            <column name="reagents_used" value="N/A"/>
+            <column name="method" value="Rockwell hardness testing on prepared alloy samples."/>
+            <column name="result_summary" value="Average hardness improved after heat treatment."/>
+            <column name="laboratory_id" valueNumeric="3"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert-experiment-researchers" author="creator">
+        <insert tableName="experiment_researchers">
+            <column name="experiment_id" valueNumeric="1"/>
+            <column name="researcher_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="experiment_researchers">
+            <column name="experiment_id" valueNumeric="1"/>
+            <column name="researcher_id" valueNumeric="4"/>
+        </insert>
+
+        <insert tableName="experiment_researchers">
+            <column name="experiment_id" valueNumeric="2"/>
+            <column name="researcher_id" valueNumeric="2"/>
+        </insert>
+
+        <insert tableName="experiment_researchers">
+            <column name="experiment_id" valueNumeric="3"/>
+            <column name="researcher_id" valueNumeric="3"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert-publications" author="creator">
+        <insert tableName="publications">
+            <column name="title" value="Acid-Base Titration Accuracy in Undergraduate Labs"/>
+            <column name="journal" value="Journal of Chemical Education"/>
+            <column name="published_date" valueDate="2025-11-15"/>
+            <column name="doi" value="10.1000/jce.2025.001"/>
+            <column name="experiment_id" valueNumeric="1"/>
+        </insert>
+
+        <insert tableName="publications">
+            <column name="title" value="PCR Optimization for Fast Diagnostics"/>
+            <column name="journal" value="Molecular Methods"/>
+            <column name="published_date" valueDate="2025-12-01"/>
+            <column name="doi" value="10.1000/mm.2025.014"/>
+            <column name="experiment_id" valueNumeric="2"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert-equipment" author="creator">
+        <insert tableName="equipment">
+            <column name="name" value="Analytical Balance"/>
+            <column name="serial_number" value="BAL-ALM-2023-001"/>
+            <column name="purchase_date" valueDate="2023-09-12"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="laboratory_id" valueNumeric="1"/>
+        </insert>
+
+        <insert tableName="equipment">
+            <column name="name" value="Thermal Cycler (PCR)"/>
+            <column name="serial_number" value="PCR-AST-2022-014"/>
+            <column name="purchase_date" valueDate="2022-02-20"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="laboratory_id" valueNumeric="2"/>
+        </insert>
+
+        <insert tableName="equipment">
+            <column name="name" value="Rockwell Hardness Tester"/>
+            <column name="serial_number" value="RCK-KRG-2021-007"/>
+            <column name="purchase_date" valueDate="2021-06-05"/>
+            <column name="status" value="MAINTENANCE"/>
+            <column name="laboratory_id" valueNumeric="3"/>
         </insert>
     </changeSet>
 

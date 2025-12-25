@@ -1,9 +1,9 @@
 package com.example.springbootdemo.restcontroller;
 
-import com.example.springbootdemo.DTO.ResearcherDTO;
+import com.example.springbootdemo.DTO.ResearcherRequestDTO;
+import com.example.springbootdemo.DTO.ResearcherResponseDTO;
 import com.example.springbootdemo.service.ResearcherService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,30 +16,30 @@ public class ResearcherController {
     private final ResearcherService researcherService;
 
     @GetMapping
-    public ResponseEntity<List<ResearcherDTO>> getAllResearchers() {
-        List<ResearcherDTO> researchers = researcherService.getAllResearchers();
+    public ResponseEntity<List<ResearcherResponseDTO>> getAllResearchers() {
+        List<ResearcherResponseDTO> researchers = researcherService.getAllResearchers();
         return researchers.isEmpty()
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.ok(researchers);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResearcherDTO> getResearcherById(@PathVariable Long id) {
-        ResearcherDTO researcher = researcherService.getResearcherById(id);
+    public ResponseEntity<ResearcherResponseDTO> getResearcherById(@PathVariable Long id) {
+        ResearcherResponseDTO researcher = researcherService.getResearcherById(id);
         return researcher != null
                 ? ResponseEntity.ok(researcher)
                 : ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public ResponseEntity<ResearcherDTO> createResearcher(@RequestBody ResearcherDTO dto) {
-        ResearcherDTO created = researcherService.createResearcher(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    public ResponseEntity<ResearcherResponseDTO> createResearcher(@RequestBody ResearcherRequestDTO dto) {
+        ResearcherResponseDTO created = researcherService.createResearcher(dto);
+        return ResponseEntity.status(201).body(created);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ResearcherDTO> updateResearcher(@PathVariable Long id, @RequestBody ResearcherDTO dto) {
-        ResearcherDTO updated = researcherService.updateResearcher(id, dto);
+    public ResponseEntity<ResearcherResponseDTO> updateResearcher(@PathVariable Long id, @RequestBody ResearcherRequestDTO dto) {
+        ResearcherResponseDTO updated = researcherService.updateResearcher(id, dto);
         return updated != null
                 ? ResponseEntity.ok(updated)
                 : ResponseEntity.notFound().build();

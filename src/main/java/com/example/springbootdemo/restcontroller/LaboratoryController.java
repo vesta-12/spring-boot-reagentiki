@@ -1,9 +1,9 @@
 package com.example.springbootdemo.restcontroller;
 
-import com.example.springbootdemo.DTO.LaboratoryDTO;
+import com.example.springbootdemo.DTO.LaboratoryRequestDTO;
+import com.example.springbootdemo.DTO.LaboratoryResponseDTO;
 import com.example.springbootdemo.service.LaboratoryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,30 +16,30 @@ public class LaboratoryController {
     private final LaboratoryService laboratoryService;
 
     @GetMapping
-    public ResponseEntity<List<LaboratoryDTO>> getAllLaboratories() {
-        List<LaboratoryDTO> laboratories = laboratoryService.getAllLaboratories();
-        return laboratories.isEmpty()
+    public ResponseEntity<List<LaboratoryResponseDTO>> getAllLaboratories() {
+        List<LaboratoryResponseDTO> labs = laboratoryService.getAllLaboratories();
+        return labs.isEmpty()
                 ? ResponseEntity.noContent().build()
-                : ResponseEntity.ok(laboratories);
+                : ResponseEntity.ok(labs);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LaboratoryDTO> getLaboratoryById(@PathVariable Long id) {
-        LaboratoryDTO laboratory = laboratoryService.getLaboratoryById(id);
-        return laboratory != null
-                ? ResponseEntity.ok(laboratory)
+    public ResponseEntity<LaboratoryResponseDTO> getLaboratoryById(@PathVariable Long id) {
+        LaboratoryResponseDTO lab = laboratoryService.getLaboratoryById(id);
+        return lab != null
+                ? ResponseEntity.ok(lab)
                 : ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public ResponseEntity<LaboratoryDTO> createLaboratory(@RequestBody LaboratoryDTO dto) {
-        LaboratoryDTO created = laboratoryService.createLaboratory(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    public ResponseEntity<LaboratoryResponseDTO> createLaboratory(@RequestBody LaboratoryRequestDTO dto) {
+        LaboratoryResponseDTO created = laboratoryService.createLaboratory(dto);
+        return ResponseEntity.status(201).body(created);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LaboratoryDTO> updateLaboratory(@PathVariable Long id, @RequestBody LaboratoryDTO dto) {
-        LaboratoryDTO updated = laboratoryService.updateLaboratory(id, dto);
+    public ResponseEntity<LaboratoryResponseDTO> updateLaboratory(@PathVariable Long id, @RequestBody LaboratoryRequestDTO dto) {
+        LaboratoryResponseDTO updated = laboratoryService.updateLaboratory(id, dto);
         return updated != null
                 ? ResponseEntity.ok(updated)
                 : ResponseEntity.notFound().build();

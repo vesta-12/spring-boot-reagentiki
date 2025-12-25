@@ -1,7 +1,5 @@
 package com.example.springbootdemo.mapper;
 
-import com.example.springbootdemo.DTO.CountryDto;
-import com.example.springbootdemo.model.Country;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;

@@ -1,9 +1,9 @@
 package com.example.springbootdemo.restcontroller;
 
-import com.example.springbootdemo.DTO.ExperimentDTO;
+import com.example.springbootdemo.DTO.ExperimentRequestDTO;
+import com.example.springbootdemo.DTO.ExperimentResponseDTO;
 import com.example.springbootdemo.service.ExperimentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,33 +17,30 @@ public class ExperimentController {
     private final ExperimentService experimentService;
 
     @GetMapping
-    public ResponseEntity<List<ExperimentDTO>> getAllExperiments() {
-        List<ExperimentDTO> experiments = experimentService.getAllExperiments();
+    public ResponseEntity<List<ExperimentResponseDTO>> getAllExperiments() {
+        List<ExperimentResponseDTO> experiments = experimentService.getAllExperiments();
         return experiments.isEmpty()
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.ok(experiments);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ExperimentDTO> getExperimentById(@PathVariable Long id) {
-        ExperimentDTO experiment = experimentService.getExperimentById(id);
+    public ResponseEntity<ExperimentResponseDTO> getExperimentById(@PathVariable Long id) {
+        ExperimentResponseDTO experiment = experimentService.getExperimentById(id);
         return experiment != null
                 ? ResponseEntity.ok(experiment)
                 : ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public ResponseEntity<ExperimentDTO> createExperiment(@RequestBody ExperimentDTO dto) {
-        ExperimentDTO created = experimentService.createExperiment(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    public ResponseEntity<ExperimentResponseDTO> createExperiment(@RequestBody ExperimentRequestDTO dto) {
+        ExperimentResponseDTO created = experimentService.createExperiment(dto);
+        return ResponseEntity.status(201).body(created);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ExperimentDTO> updateExperiment(
-            @PathVariable Long id,
-            @RequestBody ExperimentDTO dto
-    ) {
-        ExperimentDTO updated = experimentService.updateExperiment(id, dto);
+    public ResponseEntity<ExperimentResponseDTO> updateExperiment(@PathVariable Long id, @RequestBody ExperimentRequestDTO dto) {
+        ExperimentResponseDTO updated = experimentService.updateExperiment(id, dto);
         return updated != null
                 ? ResponseEntity.ok(updated)
                 : ResponseEntity.notFound().build();
@@ -56,64 +53,68 @@ public class ExperimentController {
     }
 
     @PutMapping("/{experimentId}/laboratory/{laboratoryId}")
-    public ResponseEntity<ExperimentDTO> assignLaboratory(
+    public ResponseEntity<ExperimentResponseDTO> assignLaboratory(
             @PathVariable Long experimentId,
-            @PathVariable Long laboratoryId) {
-        ExperimentDTO result = experimentService.assignLaboratoryToExperiment(experimentId, laboratoryId);
-        return result != null
-                ? ResponseEntity.ok(result)
+            @PathVariable Long laboratoryId
+    ) {
+        ExperimentResponseDTO updated = experimentService.assignLaboratoryToExperiment(experimentId, laboratoryId);
+        return updated != null
+                ? ResponseEntity.ok(updated)
                 : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{experimentId}/laboratory")
-    public ResponseEntity<ExperimentDTO> removeLaboratory(@PathVariable Long experimentId) {
-        ExperimentDTO result = experimentService.removeLaboratoryFromExperiment(experimentId);
-        return result != null
-                ? ResponseEntity.ok(result)
+    public ResponseEntity<ExperimentResponseDTO> removeLaboratory(@PathVariable Long experimentId) {
+        ExperimentResponseDTO updated = experimentService.removeLaboratoryFromExperiment(experimentId);
+        return updated != null
+                ? ResponseEntity.ok(updated)
                 : ResponseEntity.notFound().build();
     }
 
     @PutMapping("/{experimentId}/researchers/{researcherId}")
-    public ResponseEntity<ExperimentDTO> addResearcher(
+    public ResponseEntity<ExperimentResponseDTO> addResearcher(
             @PathVariable Long experimentId,
-            @PathVariable Long researcherId) {
-        ExperimentDTO result = experimentService.addResearcherToExperiment(experimentId, researcherId);
-        return result != null
-                ? ResponseEntity.ok(result)
+            @PathVariable Long researcherId
+    ) {
+        ExperimentResponseDTO updated = experimentService.addResearcherToExperiment(experimentId, researcherId);
+        return updated != null
+                ? ResponseEntity.ok(updated)
                 : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{experimentId}/researchers/{researcherId}")
-    public ResponseEntity<ExperimentDTO> removeResearcher(
+    public ResponseEntity<ExperimentResponseDTO> removeResearcher(
             @PathVariable Long experimentId,
-            @PathVariable Long researcherId) {
-        ExperimentDTO result = experimentService.removeResearcherFromExperiment(experimentId, researcherId);
-        return result != null
-                ? ResponseEntity.ok(result)
+            @PathVariable Long researcherId
+    ) {
+        ExperimentResponseDTO updated = experimentService.removeResearcherFromExperiment(experimentId, researcherId);
+        return updated != null
+                ? ResponseEntity.ok(updated)
                 : ResponseEntity.notFound().build();
     }
 
     @PutMapping("/{experimentId}/researchers")
-    public ResponseEntity<ExperimentDTO> updateResearchers(
+    public ResponseEntity<ExperimentResponseDTO> updateResearchers(
             @PathVariable Long experimentId,
-            @RequestBody List<Long> researcherIds) {
-        ExperimentDTO result = experimentService.updateExperimentResearchers(experimentId, researcherIds);
-        return result != null
-                ? ResponseEntity.ok(result)
+            @RequestBody List<Long> researcherIds
+    ) {
+        ExperimentResponseDTO updated = experimentService.updateExperimentResearchers(experimentId, researcherIds);
+        return updated != null
+                ? ResponseEntity.ok(updated)
                 : ResponseEntity.notFound().build();
     }
 
     @GetMapping("/laboratory/{laboratoryId}")
-    public ResponseEntity<List<ExperimentDTO>> getExperimentsByLaboratory(@PathVariable Long laboratoryId) {
-        List<ExperimentDTO> experiments = experimentService.getExperimentsByLaboratory(laboratoryId);
+    public ResponseEntity<List<ExperimentResponseDTO>> getByLaboratory(@PathVariable Long laboratoryId) {
+        List<ExperimentResponseDTO> experiments = experimentService.getExperimentsByLaboratory(laboratoryId);
         return experiments.isEmpty()
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.ok(experiments);
     }
 
     @GetMapping("/researcher/{researcherId}")
-    public ResponseEntity<List<ExperimentDTO>> getExperimentsByResearcher(@PathVariable Long researcherId) {
-        List<ExperimentDTO> experiments = experimentService.getExperimentsByResearcher(researcherId);
+    public ResponseEntity<List<ExperimentResponseDTO>> getByResearcher(@PathVariable Long researcherId) {
+        List<ExperimentResponseDTO> experiments = experimentService.getExperimentsByResearcher(researcherId);
         return experiments.isEmpty()
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.ok(experiments);

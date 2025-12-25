@@ -1,6 +1,7 @@
 package com.example.springbootdemo.service;
 
-import com.example.springbootdemo.DTO.ExperimentDTO;
+import com.example.springbootdemo.DTO.ExperimentRequestDTO;
+import com.example.springbootdemo.DTO.ExperimentResponseDTO;
 import com.example.springbootdemo.mapper.ExperimentMapper;
 import com.example.springbootdemo.model.Experiment;
 import com.example.springbootdemo.model.Laboratory;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,33 +26,60 @@ public class ExperimentService {
     private final ResearcherRepository researcherRepository;
     private final ExperimentMapper experimentMapper;
 
-    public List<ExperimentDTO> getAllExperiments() {
-        return experimentRepository.findAll()
+    public List<ExperimentResponseDTO> getAllExperiments() {
+        return experimentRepository.findAllWithResearchers()
                 .stream()
                 .map(experimentMapper::toDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
-    public ExperimentDTO getExperimentById(Long id) {
-        return experimentRepository.findById(id)
+    public ExperimentResponseDTO getExperimentById(Long id) {
+        return experimentRepository.findByIdWithResearchers(id)
                 .map(experimentMapper::toDto)
                 .orElse(null);
     }
 
-    public ExperimentDTO createExperiment(ExperimentDTO dto) {
+    public ExperimentResponseDTO createExperiment(ExperimentRequestDTO dto) {
         Experiment experiment = experimentMapper.toEntity(dto);
-        Experiment savedExperiment = experimentRepository.save(experiment);
-        return experimentMapper.toDto(savedExperiment);
+
+        if (dto.getLaboratoryId() != null) {
+            Laboratory lab = laboratoryRepository.findById(dto.getLaboratoryId()).orElse(null);
+            experiment.setLaboratory(lab);
+        }
+
+        if (dto.getResearcherIds() != null) {
+            List<Researcher> researchers = researcherRepository.findAllById(dto.getResearcherIds());
+            experiment.setResearchers(new ArrayList<>(researchers));
+        }
+
+        Experiment saved = experimentRepository.save(experiment);
+        return experimentMapper.toDto(saved);
     }
 
-    public ExperimentDTO updateExperiment(Long id, ExperimentDTO dto) {
-        Experiment existing = experimentRepository.findById(id).orElse(null);
+    public ExperimentResponseDTO updateExperiment(Long id, ExperimentRequestDTO dto) {
+        Experiment existing = experimentRepository.findByIdWithResearchers(id).orElse(null);
         if (existing == null) return null;
 
         existing.setExperimentName(dto.getExperimentName());
         existing.setLeaderName(dto.getLeaderName());
         existing.setDate(dto.getDate());
+        existing.setReagentsUsed(dto.getReagentsUsed());
+        existing.setMethod(dto.getMethod());
         existing.setResultSummary(dto.getResultSummary());
+
+        if (dto.getLaboratoryId() != null) {
+            Laboratory lab = laboratoryRepository.findById(dto.getLaboratoryId()).orElse(null);
+            existing.setLaboratory(lab);
+        } else if (dto.getLaboratoryId() == null) {
+            // если хочешь оставить лабораторию как есть — убери эту строку
+            existing.setLaboratory(null);
+        }
+
+        if (dto.getResearcherIds() != null) {
+            List<Researcher> researchers = researcherRepository.findAllById(dto.getResearcherIds());
+            existing.getResearchers().clear();
+            existing.getResearchers().addAll(researchers);
+        }
 
         Experiment updated = experimentRepository.save(existing);
         return experimentMapper.toDto(updated);
@@ -61,7 +90,7 @@ public class ExperimentService {
     }
 
     @Transactional
-    public ExperimentDTO assignLaboratoryToExperiment(Long experimentId, Long laboratoryId) {
+    public ExperimentResponseDTO assignLaboratoryToExperiment(Long experimentId, Long laboratoryId) {
         Experiment experiment = experimentRepository.findById(experimentId).orElse(null);
         Laboratory laboratory = laboratoryRepository.findById(laboratoryId).orElse(null);
 
@@ -74,7 +103,7 @@ public class ExperimentService {
     }
 
     @Transactional
-    public ExperimentDTO removeLaboratoryFromExperiment(Long experimentId) {
+    public ExperimentResponseDTO removeLaboratoryFromExperiment(Long experimentId) {
         Experiment experiment = experimentRepository.findById(experimentId).orElse(null);
         if (experiment != null) {
             experiment.setLaboratory(null);
@@ -85,7 +114,7 @@ public class ExperimentService {
     }
 
     @Transactional
-    public ExperimentDTO addResearcherToExperiment(Long experimentId, Long researcherId) {
+    public ExperimentResponseDTO addResearcherToExperiment(Long experimentId, Long researcherId) {
         Experiment experiment = experimentRepository.findById(experimentId).orElse(null);
         Researcher researcher = researcherRepository.findById(researcherId).orElse(null);
 
@@ -98,7 +127,7 @@ public class ExperimentService {
     }
 
     @Transactional
-    public ExperimentDTO removeResearcherFromExperiment(Long experimentId, Long researcherId) {
+    public ExperimentResponseDTO removeResearcherFromExperiment(Long experimentId, Long researcherId) {
         Experiment experiment = experimentRepository.findById(experimentId).orElse(null);
         Researcher researcher = researcherRepository.findById(researcherId).orElse(null);
 
@@ -111,7 +140,7 @@ public class ExperimentService {
     }
 
     @Transactional
-    public ExperimentDTO updateExperimentResearchers(Long experimentId, List<Long> researcherIds) {
+    public ExperimentResponseDTO updateExperimentResearchers(Long experimentId, List<Long> researcherIds) {
         Experiment experiment = experimentRepository.findById(experimentId).orElse(null);
         if (experiment == null) return null;
 
@@ -123,14 +152,14 @@ public class ExperimentService {
         return experimentMapper.toDto(updated);
     }
 
-    public List<ExperimentDTO> getExperimentsByLaboratory(Long laboratoryId) {
+    public List<ExperimentResponseDTO> getExperimentsByLaboratory(Long laboratoryId) {
         return experimentRepository.findByLaboratoryId(laboratoryId)
                 .stream()
                 .map(experimentMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public List<ExperimentDTO> getExperimentsByResearcher(Long researcherId) {
+    public List<ExperimentResponseDTO> getExperimentsByResearcher(Long researcherId) {
         return experimentRepository.findByResearchersId(researcherId)
                 .stream()
                 .map(experimentMapper::toDto)
