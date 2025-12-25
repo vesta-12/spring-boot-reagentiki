@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!--
+        Пароль для всех пользователей: SLON123!
+        BCrypt (strength=10)
+    -->
+
+    <changeSet id="insert-admin-user" author="creator">
+        <insert tableName="users">
+            <column name="username" value="admin"/>
+            <column name="email" value="admin@local.dev"/>
+            <column name="password_hash"
+                    value="$2b$10$bYEQEvX1//N2wpY1ft5WXewBjz5wrEEsyi7vrR8KvH1DjxUcI9ENS"/>
+            <column name="role" value="ADMIN"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert-manager-user" author="creator">
+        <insert tableName="users">
+            <column name="username" value="manager"/>
+            <column name="email" value="manager@local.dev"/>
+            <column name="password_hash"
+                    value="$2b$10$bYEQEvX1//N2wpY1ft5WXewBjz5wrEEsyi7vrR8KvH1DjxUcI9ENS"/>
+            <column name="role" value="MANAGER"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert-default-user" author="creator">
+        <insert tableName="users">
+            <column name="username" value="user"/>
+            <column name="email" value="user@local.dev"/>
+            <column name="password_hash"
+                    value="$2b$10$bYEQEvX1//N2wpY1ft5WXewBjz5wrEEsyi7vrR8KvH1DjxUcI9ENS"/>
+            <column name="role" value="USER"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

@@ -8,4 +8,7 @@
     <include file="changes/tables.xml" relativeToChangelogFile="true"/>
     <include file="changes/insert.xml" relativeToChangelogFile="true"/>
 
+    <include file="changes/security-tables.xml" relativeToChangelogFile="true"/>
+    <include file="changes/security-insert.xml" relativeToChangelogFile="true"/>
+
 </databaseChangeLog>
