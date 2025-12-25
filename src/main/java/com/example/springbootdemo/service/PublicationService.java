@@ -9,7 +9,6 @@ import com.example.springbootdemo.repository.ExperimentRepository;
 import com.example.springbootdemo.repository.PublicationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 

@@ -10,7 +10,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExperimentResponseDTO {
-
     private Long id;
     private String experimentName;
     private String leaderName;

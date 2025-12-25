@@ -6,7 +6,6 @@ import com.example.springbootdemo.model.Experiment;
 import com.example.springbootdemo.model.Researcher;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-
 import java.util.List;
 
 @Mapper(componentModel = "spring")

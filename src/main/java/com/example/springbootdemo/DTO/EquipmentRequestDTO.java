@@ -9,7 +9,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EquipmentRequestDTO {
-
     private String name;
     private String serialNumber;
     private LocalDate purchaseDate;

@@ -54,8 +54,6 @@ public class EquipmentMapperTest {
         req.setLaboratoryId(1L);
 
         Equipment entity = equipmentMapper.toEntity(req);
-
-        // laboratory игнорируется маппером (проставляем в сервисе)
         Assertions.assertAll(
                 () -> Assertions.assertNotNull(entity),
                 () -> Assertions.assertEquals(req.getName(), entity.getName()),

@@ -9,7 +9,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PublicationResponseDTO {
-
     private Long id;
     private String title;
     private String journal;

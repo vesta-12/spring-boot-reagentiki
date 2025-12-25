@@ -41,7 +41,6 @@ public class LaboratoryServiceTest {
 
     @BeforeEach
     public void cleanDatabase() {
-        // publications -> experiments -> equipment -> laboratories
         publicationRepository.deleteAll();
         experimentRepository.deleteAll();
         equipmentRepository.deleteAll();

@@ -41,7 +41,6 @@ public class ExperimentServiceTest {
 
     @BeforeEach
     public void cleanDatabase() {
-        // publications -> experiments -> researchers -> laboratories (из-за FK)
         publicationRepository.deleteAll();
         experimentRepository.deleteAll();
         researcherRepository.deleteAll();

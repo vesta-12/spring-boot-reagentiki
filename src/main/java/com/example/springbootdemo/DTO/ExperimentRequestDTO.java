@@ -11,7 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExperimentRequestDTO {
-
     private String experimentName;
     private String leaderName;
     private LocalDate date;

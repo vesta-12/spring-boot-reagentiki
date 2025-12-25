@@ -9,11 +9,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PublicationRequestDTO {
-
     private String title;
     private String journal;
     private LocalDate publishedDate;
     private String doi;
-
     private Long experimentId;
 }

@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-
 import java.time.LocalDate;
 
 @SpringBootTest
@@ -56,7 +55,6 @@ public class PublicationMapperTest {
 
         Publication entity = publicationMapper.toEntity(req);
 
-        // experiment игнорируется маппером (проставляем в сервисе) — поэтому проверяем что он null
         Assertions.assertAll(
                 () -> Assertions.assertNotNull(entity),
                 () -> Assertions.assertEquals(req.getTitle(), entity.getTitle()),

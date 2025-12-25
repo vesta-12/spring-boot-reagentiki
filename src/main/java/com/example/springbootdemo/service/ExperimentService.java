@@ -12,7 +12,6 @@ import com.example.springbootdemo.repository.ResearcherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -71,7 +70,6 @@ public class ExperimentService {
             Laboratory lab = laboratoryRepository.findById(dto.getLaboratoryId()).orElse(null);
             existing.setLaboratory(lab);
         } else if (dto.getLaboratoryId() == null) {
-            // если хочешь оставить лабораторию как есть — убери эту строку
             existing.setLaboratory(null);
         }
 

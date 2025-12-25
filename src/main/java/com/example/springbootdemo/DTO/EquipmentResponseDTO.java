@@ -9,7 +9,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EquipmentResponseDTO {
-
     private Long id;
     private String name;
     private String serialNumber;
