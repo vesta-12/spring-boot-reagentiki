@@ -21,6 +21,11 @@ The project was developed as a **Software Engineering final project** and follow
 
 ---
 
+## Full Postman Collection
+https://vesta-12-2460039.postman.co/workspace/Serbina-Sofiya's-Workspace~e2764b0c-ea4c-4ebd-84a2-3956a7dd9bc2/collection/49686694-1165a874-29e6-4b37-8a28-871e3234458d?action=share&source=copy-link&creator=49686694
+
+---
+
 ## Architecture Overview
 
 The project follows a **classic layered architecture**:
